@@ -1,0 +1,24 @@
+.image{
+	background: url('../assets/bigStar.png');
+	width: 250px;
+	height: 240px;
+	background-size: cover;
+	font-size: 64px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+.deleteOrder{
+	margin-left: 25px;
+	color: #ca5252;
+	cursor: pointer;
+	float: right;
+	transition: color, transform 500ms ease;
+}
+
+.deleteOrder:hover{
+	color: #d83030;
+	transform: scale(1.5);
+}
