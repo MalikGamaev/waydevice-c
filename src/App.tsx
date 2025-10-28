@@ -7,15 +7,17 @@ import { Spinner } from 'react-bootstrap';
 import { BrowserRouter } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import './style/style.css'
+import Footer from './components/Footer';
+
 
 
 const App = observer(() => {
-	const { user } = useContext(Context)
+	const { user } = useContext(Context)!
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		check().then(data => {
-			user.setUser(data)
+		check().then((u) => {
+			user.setUser(u)
 			user.setIsAuth(true)
 		}).finally(() => setLoading(false))
 	}, [])
@@ -25,8 +27,11 @@ const App = observer(() => {
 	}
 	return (
 		<BrowserRouter>
-			<NavBar />
-			<AppRouter />
+			<div className='app'>
+				<NavBar />
+				<AppRouter />
+				<Footer/>
+			</div>
 		</BrowserRouter>
 	);
 });

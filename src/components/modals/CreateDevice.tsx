@@ -1,16 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, type ChangeEvent, type FC } from 'react';
 import Modal from "react-bootstrap/Modal";
 import { Button, Dropdown, Form, Row, Col } from "react-bootstrap";
 import { Context } from '../Providers';
-import { createDevice, fetchBrands, fetchDevices, fetchTypes } from "../../http/deviceAPI";
+import { createDeviceForm, fetchBrands, fetchTypes } from "../../http/deviceAPI";
 import { observer } from "mobx-react-lite";
+import type { CreateProps, InfoItem } from '../../entities/global/types';
 
-const CreateDevice = observer(({ show, onHide }) => {
-	const { device } = useContext(Context)
+const CreateDevice: FC<CreateProps> = observer(({ show, onHide }) => {
+	const { device } = useContext(Context)!
 	const [name, setName] = useState('')
 	const [price, setPrice] = useState(0)
-	const [file, setFile] = useState(null)
-	const [info, setInfo] = useState([])
+	const [file, setFile] = useState<File | null>(null)
+	const [info, setInfo] = useState<InfoItem[]>([])
 
 	useEffect(() => {
 		fetchTypes().then(data => device.setTypes(data))
@@ -20,27 +21,54 @@ const CreateDevice = observer(({ show, onHide }) => {
 	const addInfo = () => {
 		setInfo([...info, { title: '', description: '', number: Date.now() }])
 	}
-	const removeInfo = (number) => {
+	const removeInfo = (number: number) => {
 		setInfo(info.filter(i => i.number !== number))
 	}
-	const changeInfo = (key, value, number) => {
+	const changeInfo = (key: 'title' | 'description', value: string, number: number) => {
 		setInfo(info.map(i => i.number === number ? { ...i, [key]: value } : i))
 	}
 
-	const selectFile = e => {
-		setFile(e.target.files[0])
+	const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
 	}
 
-	const addDevice = () => {
-		const formData = new FormData()
+	const uploadImage = async (file: File) => {
+    	const formData = new FormData();
+    	formData.append('file', file);
+    	formData.append('upload_preset', 'unsigned_preset');
+
+    	const response = await fetch(
+      `https://api.cloudinary.com/v1_1/dxzzglv48/image/upload`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+    const data = await response.json();
+	 
+    return data.secure_url;
+  };
+
+	const addDevice = async () => {
+		try {
+			let imgUrl = '';
+      if (file) {
+        imgUrl = await uploadImage(file);
+      }
+			const formData = new FormData()
 		formData.append('name', name)
 		formData.append('price', `${price}`)
-		formData.append('img', file)
-		formData.append('brandId', device.selectedBrand.id)
-		formData.append('typeId', device.selectedType.id)
+		if(file) formData.append('img', imgUrl)
+		formData.append('brandId', String(device.selectedBrand?.id ?? ''))
+		formData.append('typeId', String(device.selectedType?.id ?? ''))
 		formData.append('info', JSON.stringify(info))
-		createDevice(formData).then(data => onHide())
-		debugger
+		createDeviceForm(formData).then(() => onHide())
+		} catch (e) {
+			console.error('Ошибка при добавлении устройства', e);
+		}
+		
 	}
 
 	return (
@@ -57,7 +85,7 @@ const CreateDevice = observer(({ show, onHide }) => {
 			<Modal.Body>
 				<Form>
 					<Dropdown className="mt-2 mb-2">
-						<Dropdown.Toggle>{device.selectedType.name || "Выберите тип"}</Dropdown.Toggle>
+						<Dropdown.Toggle>{device.selectedType?.name || "Выберите тип"}</Dropdown.Toggle>
 						<Dropdown.Menu>
 							{device.types.map(type =>
 								<Dropdown.Item
@@ -70,7 +98,7 @@ const CreateDevice = observer(({ show, onHide }) => {
 						</Dropdown.Menu>
 					</Dropdown>
 					<Dropdown className="mt-2 mb-2">
-						<Dropdown.Toggle>{device.selectedBrand.name || "Выберите тип"}</Dropdown.Toggle>
+						<Dropdown.Toggle>{device.selectedBrand?.name || "Выберите тип"}</Dropdown.Toggle>
 						<Dropdown.Menu>
 							{device.brands.map(brand =>
 								<Dropdown.Item

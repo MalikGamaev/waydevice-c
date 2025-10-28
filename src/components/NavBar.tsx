@@ -8,43 +8,45 @@ import { Context } from './Providers';
 
 const NavBar = observer(() => {
 	const navigate = useNavigate();
-	const { user } = useContext(Context);
+	const { user } = useContext(Context)!;
+
 
 
 	const logOut = () => {
-		user.setUser({});
+		user.setUser(null);
 		user.setIsAuth(false);
 		localStorage.removeItem('token');
 		navigate(LOGIN_ROUTE);
 	};
 
 	return (
-		<Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+		<Navbar style={{background: 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)'}} expand="lg" sticky="top">
       <Container>
-        <Navbar.Brand as={Link} to={SHOP_ROUTE}>
+        <Navbar.Brand className='brand-logo' style={{color: 'white'}} as={Link} to={SHOP_ROUTE}>
           WayDEVICE
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {user.isAuth ? (
             <Nav className="ms-auto align-items-center">
-              <Button
+					{user.user?.role === 'ADMIN' && (
+						<Button
                 variant="outline-light"
                 className="me-2"
                 onClick={() => navigate(ADMIN_ROUTE)}
               >
                 Админ панель
               </Button>
-
+					)}	
               <Button
                 variant="outline-light"
                 className="me-2"
-                onClick={() => navigate(`${BASKET_ROUTE}/${user.user.id}`)}
+                onClick={() => navigate(BASKET_ROUTE)}
               >
                 Корзина
               </Button>
 
-              <span className="text-white me-3">{user.user.email}</span>
+              <span className="text-white me-3">{user.user?.email}</span>
 
               <Button variant="outline-light" onClick={logOut}>
                 Выйти

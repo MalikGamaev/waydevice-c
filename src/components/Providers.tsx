@@ -1,16 +1,23 @@
-import React, { createContext } from 'react';
+import { createContext, type FC } from 'react';
 import UserStore from '../store/UserStore';
 import DeviceStore from '../store/DeviceStore';
-import App from '../App';
+import type { IUserStore } from '../entities/user/types';
+import type { IDeviceStore } from '../entities/device/types';
 
-export const Context = createContext(null);
+interface ContextType {
+	user: IUserStore;
+	device: IDeviceStore
+}
 
-const Providers = ({ children }) => {
+// eslint-disable-next-line react-refresh/only-export-components
+export const Context = createContext<ContextType | null>(null);
+
+const Providers: FC<{children: React.ReactNode}> = ({children}) => {
 	return (
 		<Context.Provider
 			value={{ user: new UserStore(), device: new DeviceStore() }}
 		>
-			<App />
+			{children}
 		</Context.Provider>
 	);
 };

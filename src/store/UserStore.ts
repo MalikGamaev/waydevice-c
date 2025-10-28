@@ -1,18 +1,19 @@
 import { makeAutoObservable } from 'mobx'
+import type { User } from '../entities/user/types'
 
 export default class UserStore {
+	private _isAuth: boolean = false 
+	private _user: User | null = null
 	constructor() {
-		this._isAuth = false
-		this._user = {}
 		makeAutoObservable(this)
 	}
 
-	setIsAuth(bool) {
+	setIsAuth(bool: boolean) {
 		this._isAuth = bool
 	}
 
-	setUser(user) {
-		this._user = user
+	setUser(u: User) {
+		this._user = u
 	}
 
 	get isAuth() {

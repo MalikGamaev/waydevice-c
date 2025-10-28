@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { createBrand } from '../../http/deviceAPI';
+import type { CreateProps } from '../../entities/global/types';
 
-const CreateBrand = ({ show, onHide }) => {
+
+const CreateBrand: FC<CreateProps> = ({ show, onHide }) => {
 	const [value, setValue] = useState('')
 
 	const addBrand = () => {
-		createBrand({ name: value }).then(data => {
+		createBrand({ name: value }).then(() => {
 			setValue('')
 			onHide()
 		}).catch((error) => alert(error.response.data.message))

@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import React, { useContext } from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
+import { useContext } from 'react';
+import {  Row } from 'react-bootstrap';
 import { Context } from './Providers';
 import DeviceItem from './DeviceItem';
 
 const DeviceList = observer(() => {
-	const { device } = useContext(Context)
+	const { device } = useContext(Context)!
 	return (
 		<Row className='d-flex'>
 

@@ -1,7 +1,9 @@
+import type { Brand } from "../entities/brand/types";
+import type { Type } from "../entities/type/types";
 import { $authHost, $host } from "./index";
 
 
-export const createType = async (type) => {
+export const createType = async (type: Type) => {
 	const { data } = await $authHost.post('api/type', type)
 	return data
 }
@@ -11,7 +13,7 @@ export const fetchTypes = async () => {
 	return data
 }
 
-export const createBrand = async (brand) => {
+export const createBrand = async (brand: Brand) => {
 	const { data } = await $authHost.post('api/brand', brand)
 	return data
 }
@@ -21,32 +23,38 @@ export const fetchBrands = async () => {
 	return data
 }
 
-export const createDevice = async (device) => {
-	const { data } = await $authHost.post('api/device', device)
-	return data
-}
+export const createDeviceForm = async (deviceData: FormData) => {
+	
+	try {
+		const { data } = await $authHost.post('api/device', deviceData);
+  		return data;
+	} catch (error) {
+		console.error(`Ошибка: ${error}`)
+	}
+  
+};
 
-export const fetchDevices = async (typeId, brandId, page, limit = 5) => {
+export const fetchDevices = async (typeId: number | null, brandId: number | null, searchName: string | null, page: number, limit = 5) => {
 	const { data } = await $host.get('api/device', {
 		params: {
-			typeId, brandId, page, limit
+			typeId, brandId, searchName, page, limit
 		}
 	})
 	return data
 }
 
-export const fetchOneDevice = async (id) => {
+export const fetchOneDevice = async (id: number) => {
 	const { data } = await $host.get('api/device/' + id)
 	return data
 }
 
-export const addToBasket = async (deviceId) => {
-	const { response } = await $authHost.post('api/basket', deviceId)
+export const addToBasket = async (formData: FormData) => {
+	const response  = await $authHost.post('api/basket', formData)
 	return response
 }
 
-export const deleteOneDeviceToBasket = async (deviceId) => {
-	const { response } = await $authHost.delete('api/basket', deviceId)
+export const deleteOneDeviceToBasket = async (id: number) => {
+	const response = await $authHost.delete('api/basket/' + id)
 	return response
 }
 

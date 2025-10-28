@@ -1,15 +1,16 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import { useState, type FC } from 'react';
 import { createType } from '../../http/deviceAPI';
+import type { CreateProps } from '../../entities/global/types';
 
-const CreateType = ({ show, onHide }) => {
+const CreateType: FC<CreateProps> = ({ show, onHide }) => {
 	const [value, setValue] = useState('');
 
 	const addType = () => {
 		createType({ name: value })
-			.then((data) => {
+			.then(() => {
 				setValue('');
 				onHide();
 			})

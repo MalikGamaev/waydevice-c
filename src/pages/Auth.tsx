@@ -1,15 +1,16 @@
 import { observer } from 'mobx-react-lite';
-import React, { useContext, useState } from 'react';
-import { Button, Card, Container, Form, Row, Col } from 'react-bootstrap';
+import { useContext, useState } from 'react';
+import { Button, Card, Container, Form } from 'react-bootstrap';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../components/Providers';
 import { login, registration } from '../http/userAPI';
+import axios from 'axios'
 
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../utils/consts';
 
 
 const Auth = observer(() => {
-	const { user } = useContext(Context)
+	const { user } = useContext(Context)!
 	const location = useLocation()
 	const navigate = useNavigate()
 	const isLogin = location.pathname === LOGIN_ROUTE
@@ -20,16 +21,21 @@ const Auth = observer(() => {
 		try {
 			let data;
 			if (isLogin) {
-				data = await login(email, password)
+			 data = await login(email, password)
+			 
 			} else {
-				data = await registration(email, password)
+			 data = await registration(email, password)
 			}
 
-			user.setUser(user)
+			user.setUser(data)
 			user.setIsAuth(true)
 			navigate(SHOP_ROUTE)
 		} catch (e) {
-			alert(e.response.data.message)
+			if (axios.isAxiosError(e)) {
+      		alert(e.response?.data.message);
+    		} else {
+      		alert('Произошла неизвестная ошибка');
+    		}
 		}
 
 	}

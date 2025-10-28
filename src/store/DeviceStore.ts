@@ -1,66 +1,81 @@
 import { makeAutoObservable } from 'mobx'
+import type { Type } from '../entities/type/types';
+import type { Brand } from '../entities/brand/types';
+import type { Device } from '../entities/device/types';
+import type { Basket } from '../entities/basket/types';
 
 export default class DeviceStore {
+	private _types: Type[] = [];
+  	private _brands: Brand[] = [];
+  	private _devices: Device[] = [];
+  	private _baskets: Basket[] = [];
+  
+  	private _selectedType: Type | null = null;
+  	private _selectedBrand: Brand | null = null;
+	private _searchName: string = '';
+  
+  	private _page: number = 1;
+   private _totalCount: number = 0;
+  	private _limit: number = 8;
 	constructor() {
-		this._types = []
-		this._brands = []
-		this._devices = []
-		this._baskets = []
-
-		this._selectedType = {}
-		this._selectedBrand = {}
-		this._page = 1
-		this._totalCount = 0
-		this._limit = 3
 		makeAutoObservable(this)
 	}
 
-	setTypes(types) {
+	setTypes(types: Type[]) {
 		this._types = types
 	}
 
-	setBrands(brands) {
+	setBrands(brands: Brand[]) {
 		this._brands = brands
 	}
 
-	setDevices(devices) {
+	setDevices(devices: Device[]) {
 		this._devices = devices
 	}
 
-	setBaskets(basket) {
+	setSearchName(searchName: string) {
+		this._searchName = searchName
+	}
+
+	setBaskets(basket: Basket[]) {
 		this._baskets = basket
 	}
 
-	setSelectedType(type) {
+	setSelectedType(type: Type) {
 		this.setPage(1)
 		this._selectedType = type
 	}
 
-	setSelectedBrand(brand) {
+	setSelectedBrand(brand: Brand) {
 		this.setPage(1)
 		this._selectedBrand = brand
 	}
 
-	setPage(page) {
+	setPage(page: number) {
 		this._page = page
 	}
 
-	setTotalCount(count) {
+	setTotalCount(count: number) {
 		this._totalCount = count
 	}
 
-	setLimit(limit) {
+	setLimit(limit: number) {
 		this._limit = limit;
 	}
 
 	clearSelectedBrand() {
 		this.setPage(1);
-		this._selectedBrand = {};
+		this._selectedBrand = null;
+	}
+
+	clearSearchName() {
+		this.setPage(1)
+		this._searchName = ''
 	}
 
 	clearSelectedType() {
 		this.setPage(1);
-		this._selectedType = {};
+		this._selectedType = null;
 	}
 
 	get types() {
@@ -73,6 +88,10 @@ export default class DeviceStore {
 
 	get devices() {
 		return this._devices
+	}
+
+	get searchName() {
+		return this._searchName
 	}
 
 	get basket() {
