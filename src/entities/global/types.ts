@@ -1,9 +1,9 @@
 import type { Device } from "../device/types";
 
-export interface DeviceProps {
+export interface CreateProps {
 	show: boolean;
 	onHide: () => void;
-	titleModal: string;
+	titleModal?: string;
 	currentDevice?: Device | null;
 }
 

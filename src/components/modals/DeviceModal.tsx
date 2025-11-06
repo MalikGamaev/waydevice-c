@@ -4,10 +4,10 @@ import { Button, Dropdown, Form, Row, Col } from "react-bootstrap";
 import { Context } from '../Providers';
 import { createDeviceForm, fetchBrands, fetchTypes, updateDeviceForm } from "../../http/deviceAPI";
 import { observer } from "mobx-react-lite";
-import type { DeviceProps } from '../../entities/global/types';
+import type { CreateProps } from '../../entities/global/types';
 import type { DeviceInfo } from '../../entities/device/types';
 
-const DeviceModal: FC<DeviceProps> = observer(({ show, onHide, titleModal, currentDevice }) => {
+const DeviceModal: FC<CreateProps> = observer(({ show, onHide, titleModal, currentDevice }) => {
 	const { device } = useContext(Context)!
 	const [name, setName] = useState('')
 	const [price, setPrice] = useState(0)
