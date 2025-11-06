@@ -53,7 +53,7 @@ const NavBar = observer(() => {
               </Button>
             </Nav>
           ) : (
-            <Nav className="ms-auto">
+            <Nav className="ms-auto mt-2 mt-lg-0">
               <Button variant="outline-light" onClick={() => navigate(LOGIN_ROUTE)}>
                 Авторизация
               </Button>
