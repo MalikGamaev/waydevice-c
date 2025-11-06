@@ -5,13 +5,16 @@ import { useDebounce } from 'use-debounce';
 
 const FilterDevices = () => {
 	const {device} = useContext(Context)!
-
 	const [inputValue, setInputValue] = useState<string>(device.searchName)
 	const [debouncedValue] = useDebounce(inputValue, 2000)
 
 	useEffect(() => {
 		device.setSearchName(debouncedValue)
 	}, [debouncedValue])
+
+	useEffect(() => {
+    setInputValue(device.searchName);
+  }, [device.searchName]);
 
 	
 	return (

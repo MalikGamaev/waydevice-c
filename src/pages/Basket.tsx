@@ -48,7 +48,7 @@ const Basket = observer(() => {
   }, [targetSum]);
 	return (
 		<Container
-			className="d-flex flex-sm-column justify-content-center align-items-center mt-3"
+			className="d-flex  flex-column justify-content-center align-items-center mt-3"
 		>
 			<h1 className="play-bold pb-2">Корзина</h1>
 

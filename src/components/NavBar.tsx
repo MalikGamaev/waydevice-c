@@ -32,7 +32,7 @@ const NavBar = observer(() => {
 					{user.user?.role === 'ADMIN' && (
 						<Button
                 variant="outline-light"
-                className="me-2"
+                className='mb-2 me-lg-2 mb-lg-0'
                 onClick={() => navigate(ADMIN_ROUTE)}
               >
                 Админ панель
@@ -40,13 +40,13 @@ const NavBar = observer(() => {
 					)}	
               <Button
                 variant="outline-light"
-                className="me-2"
+                className="mb-2 me-2 mb-lg-0"
                 onClick={() => navigate(BASKET_ROUTE)}
               >
                 Корзина
               </Button>
 
-              <span className="text-white me-3">{user.user?.email}</span>
+              <span className="text-white mb-2 me-3 mb-lg-0">{user.user?.email}</span>
 
               <Button variant="outline-light" onClick={logOut}>
                 Выйти

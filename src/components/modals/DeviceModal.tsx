@@ -2,26 +2,53 @@ import { useContext, useEffect, useState, type ChangeEvent, type FC } from 'reac
 import Modal from "react-bootstrap/Modal";
 import { Button, Dropdown, Form, Row, Col } from "react-bootstrap";
 import { Context } from '../Providers';
-import { createDeviceForm, fetchBrands, fetchTypes } from "../../http/deviceAPI";
+import { createDeviceForm, fetchBrands, fetchTypes, updateDeviceForm } from "../../http/deviceAPI";
 import { observer } from "mobx-react-lite";
-import type { CreateProps, InfoItem } from '../../entities/global/types';
+import type { DeviceProps } from '../../entities/global/types';
+import type { DeviceInfo } from '../../entities/device/types';
 
-const CreateDevice: FC<CreateProps> = observer(({ show, onHide }) => {
+const DeviceModal: FC<DeviceProps> = observer(({ show, onHide, titleModal, currentDevice }) => {
 	const { device } = useContext(Context)!
 	const [name, setName] = useState('')
 	const [price, setPrice] = useState(0)
 	const [file, setFile] = useState<File | null>(null)
-	const [info, setInfo] = useState<InfoItem[]>([])
+	const [info, setInfo] = useState<DeviceInfo[]>([])
 
 	useEffect(() => {
-		fetchTypes().then(data => device.setTypes(data))
-		fetchBrands().then(data => device.setBrands(data))
-	}, [])
+  fetchTypes().then(data => device.setTypes(data))
+  fetchBrands().then(data => device.setBrands(data))
+
+  if (currentDevice) {
+    setName(currentDevice.name)
+    setPrice(currentDevice.price)
+    if(currentDevice.info) {
+		setInfo(currentDevice.info.map(i => ({...i, number: i.id})))
+	 }
+    
+
+    const currentType = device.types.find(el => el.id === currentDevice.typeId)
+    const currentBrand = device.brands.find(el => el.id === currentDevice.brandId)
+
+    device.setSelectedType(currentType)
+    device.setSelectedBrand(currentBrand)
+  } else {
+    // Если модалка для создания, сбрасываем состояния
+    setName('')
+    setPrice(0)
+    setFile(null)
+    setInfo([])
+    device.setSelectedType(null)
+    device.setSelectedBrand(null)
+  }
+}, [currentDevice])
+
+	
 
 	const addInfo = () => {
 		setInfo([...info, { title: '', description: '', number: Date.now() }])
 	}
 	const removeInfo = (number: number) => {
+		
 		setInfo(info.filter(i => i.number !== number))
 	}
 	const changeInfo = (key: 'title' | 'description', value: string, number: number) => {
@@ -51,20 +78,28 @@ const CreateDevice: FC<CreateProps> = observer(({ show, onHide }) => {
     return data.secure_url;
   };
 
-	const addDevice = async () => {
+	const deviceClick = async () => {
 		try {
-			let imgUrl = '';
+			let imgUrl = currentDevice?.img || '';
       if (file) {
         imgUrl = await uploadImage(file);
       }
 			const formData = new FormData()
 		formData.append('name', name)
 		formData.append('price', `${price}`)
-		if(file) formData.append('img', imgUrl)
+		formData.append('img', imgUrl)
 		formData.append('brandId', String(device.selectedBrand?.id ?? ''))
 		formData.append('typeId', String(device.selectedType?.id ?? ''))
 		formData.append('info', JSON.stringify(info))
-		createDeviceForm(formData).then(() => onHide())
+		if(currentDevice) {
+			updateDeviceForm( currentDevice.id,formData).then(() => {
+				device.setCurrentDevice(true)
+				onHide()
+			})
+		} else {
+			createDeviceForm(formData).then(() => onHide())
+		} 
+		
 		} catch (e) {
 			console.error('Ошибка при добавлении устройства', e);
 		}
@@ -79,7 +114,7 @@ const CreateDevice: FC<CreateProps> = observer(({ show, onHide }) => {
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="contained-modal-title-vcenter">
-					Добавить устройство
+					{titleModal} устройство
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
@@ -98,7 +133,7 @@ const CreateDevice: FC<CreateProps> = observer(({ show, onHide }) => {
 						</Dropdown.Menu>
 					</Dropdown>
 					<Dropdown className="mt-2 mb-2">
-						<Dropdown.Toggle>{device.selectedBrand?.name || "Выберите тип"}</Dropdown.Toggle>
+						<Dropdown.Toggle>{device.selectedBrand?.name || "Выберите бренд"}</Dropdown.Toggle>
 						<Dropdown.Menu>
 							{device.brands.map(brand =>
 								<Dropdown.Item
@@ -136,24 +171,24 @@ const CreateDevice: FC<CreateProps> = observer(({ show, onHide }) => {
 						Добавить новое свойство
 					</Button>
 					{info.map(i =>
-						<Row className="mt-4" key={i.number}>
-							<Col md={4}>
+						<Row className="mt-4 d-flex gx-1 gx-sm-4" key={i.number}>
+							<Col xs={4}>
 								<Form.Control
 									value={i.title}
-									onChange={(e) => changeInfo('title', e.target.value, i.number)}
+									onChange={(e) => changeInfo('title', e.target.value, i.number!)}
 									placeholder="Введите название свойства"
 								/>
 							</Col>
-							<Col md={4}>
+							<Col xs={4}>
 								<Form.Control
 									value={i.description}
-									onChange={(e) => changeInfo('description', e.target.value, i.number)}
+									onChange={(e) => changeInfo('description', e.target.value, i.number!)}
 									placeholder="Введите описание свойства"
 								/>
 							</Col>
-							<Col md={4}>
+							<Col xs={4}>
 								<Button
-									onClick={() => removeInfo(i.number)}
+									onClick={() => removeInfo(i.number!)}
 									variant={"outline-danger"}
 								>
 									Удалить
@@ -165,10 +200,10 @@ const CreateDevice: FC<CreateProps> = observer(({ show, onHide }) => {
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
-				<Button variant="outline-success" onClick={addDevice}>Добавить</Button>
+				<Button variant="outline-success" onClick={deviceClick}>{titleModal}</Button> 
 			</Modal.Footer>
 		</Modal>
 	);
 });
 
-export default CreateDevice;
+export default DeviceModal;

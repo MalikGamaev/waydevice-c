@@ -10,13 +10,14 @@ export default class DeviceStore {
   	private _devices: Device[] = [];
   	private _baskets: Basket[] = [];
   
-  	private _selectedType: Type | null = null;
-  	private _selectedBrand: Brand | null = null;
+  	private _selectedType: Type | null | undefined = null;
+  	private _selectedBrand: Brand | null | undefined = null;
+	private _currentDevice: boolean = false;
 	private _searchName: string = '';
   
   	private _page: number = 1;
    private _totalCount: number = 0;
-  	private _limit: number = 8;
+  	private _limit: number = 10;
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -41,14 +42,18 @@ export default class DeviceStore {
 		this._baskets = basket
 	}
 
-	setSelectedType(type: Type) {
+	setSelectedType(type: Type | undefined) {
 		this.setPage(1)
 		this._selectedType = type
 	}
 
-	setSelectedBrand(brand: Brand) {
+	setSelectedBrand(brand: Brand | undefined) {
 		this.setPage(1)
 		this._selectedBrand = brand
+	}
+
+	setCurrentDevice(device: boolean) {
+		this._currentDevice = device
 	}
 
 	setPage(page: number) {
@@ -104,6 +109,10 @@ export default class DeviceStore {
 
 	get selectedBrand() {
 		return this._selectedBrand
+	}
+
+	get currentDevice() {
+		return this._currentDevice
 	}
 
 	get page() {

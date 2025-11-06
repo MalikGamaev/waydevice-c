@@ -1,6 +1,10 @@
-export interface CreateProps {
+import type { Device } from "../device/types";
+
+export interface DeviceProps {
 	show: boolean;
-	onHide: () => void
+	onHide: () => void;
+	titleModal: string;
+	currentDevice?: Device | null;
 }
 
 export interface InfoItem {

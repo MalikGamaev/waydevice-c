@@ -16,7 +16,8 @@ export interface Device {
 export interface DeviceInfo {
 	id?: number;
 	title: string;
-	description: string
+	description: string;
+	number?: number
 }
 
 export interface IDeviceStore {
@@ -24,8 +25,9 @@ export interface IDeviceStore {
   	brands: Brand[];
   	devices: Device[];
   	basket: Basket[];
-  	selectedType: Type | null;
-  	selectedBrand: Brand | null;
+  	selectedType: Type | null | undefined;
+  	selectedBrand: Brand | null | undefined;
+	currentDevice: boolean;
 	searchName: string;
   	page: number;
    totalCount: number;
@@ -34,9 +36,10 @@ export interface IDeviceStore {
 	setBrands(brands: Brand[]): void
 	setDevices(devices: Device[]): void
 	setBaskets(basket: Basket[]): void
-	setSelectedType(type: Type): void
-	setSelectedBrand(brand: Brand): void
+	setSelectedType(type: Type | undefined | null): void
+	setSelectedBrand(brand: Brand | undefined | null): void
 	setSearchName(searchName: string): void
+	setCurrentDevice(device: boolean): void
 	setPage(page: number): void
 	setTotalCount(count: number): void
 	setLimit(limit: number): void

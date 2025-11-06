@@ -45,7 +45,7 @@ const Auth = observer(() => {
   className="d-flex justify-content-center align-items-center"
   style={{ height: window.innerHeight - 54}}
 >
-  <Card style={{ width: 600 }} className="p-5">
+  <Card style={{ width: 600 }} className="p-4 p-sm-5">
     <h2 className="text-center">{isLogin ? 'Авторизация' : 'Регистрация'}</h2>
 
     <Form className="d-flex flex-column">
@@ -64,7 +64,7 @@ const Auth = observer(() => {
         type="password"
       />
 
-      <div className="d-flex justify-content-between align-items-center mt-3">
+      <div className="auth-text d-flex justify-content-between align-items-center mt-3">
         {isLogin ? (
           <div>
             Нет аккаунта?{' '}

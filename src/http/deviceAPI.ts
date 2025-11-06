@@ -34,7 +34,25 @@ export const createDeviceForm = async (deviceData: FormData) => {
   
 };
 
-export const fetchDevices = async (typeId: number | null, brandId: number | null, searchName: string | null, page: number, limit = 5) => {
+export const updateDeviceForm = async (deviceId: number | undefined , deviceData: FormData) => {
+	try {
+		const {data} = await $authHost.put('api/device/' + deviceId, deviceData)
+		return data
+	} catch (error) {
+		console.error(`Ошибка: ${error}`)
+	}
+}
+
+export const deleteDevice = async (deviceId: number) => {
+	try {
+		await $authHost.delete('api/device/' + deviceId)
+		return
+	} catch (error) {
+		console.error(`Ошибка: ${error}`)
+	}
+}
+
+export const fetchDevices = async (typeId: number | null, brandId: number | null, searchName: string | null, page: number, limit = 10) => {
 	const { data } = await $host.get('api/device', {
 		params: {
 			typeId, brandId, searchName, page, limit

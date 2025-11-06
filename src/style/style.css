@@ -111,3 +111,143 @@ html, body {
 }
 
 
+.product-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 150px;
+  height: 210px;
+}
+
+.product-card:hover,
+.product-card:focus {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  outline: none;
+}
+
+.image-container {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.info-section {
+  background-color: #f8f9fa;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.device-name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.device-rating {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #ffb400;
+  align-items: center;
+}
+
+.device-price {
+  font-weight: 700;
+  font-size: 17px;
+  color: #198754; /* приятный зелёный для цены */
+  
+  text-align: right;
+}
+
+.device-desc {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0;
+}
+
+.active-slide {
+  border: 2px solid #2575fc !important;
+  border-radius: 6px !important;
+  
+}
+
+.slick-slide {
+	border: 2px solid white !important;
+	border-radius: 6px !important;
+}
+
+.d-page__name {
+	font-size: 32px;
+	text-align: center;
+}
+
+.d-page__card {
+	 width: 300px;
+	 height: 300px;
+	 font-size: 32px;
+	 border: 5px solid lightgray
+}
+@media (max-width: 968px) {
+	
+}
+@media (max-width: 768px) {
+	.d-page__card {
+		width: 220px;
+	}
+}
+
+@media (max-width: 576px) {
+	.d-page__card {
+		width: 300px;
+	}
+	.slick-list::after, .slick-list::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	
+	width: 55px;
+	height: 29px;
+	z-index: 10;
+}
+
+.slick-list::after {
+	right: -15px;
+	
+	background: linear-gradient(270deg, #f8f8f8 1.1%, rgba(248, 248, 248, 0.0001) 100%);
+}
+
+.slick-list::before {
+	left: -15px;
+	background: linear-gradient(90deg, #f8f8f8 1.1%, rgba(248, 248, 248, 0.0001) 100%);
+}
+	
+}
+
+
+.slick-list {
+  overflow: visible !important;
+}
+
+/* Делает слайды с отступами, чтобы не слипались */
+
+/* При необходимости компенсируйте отступы треком */
+
+
