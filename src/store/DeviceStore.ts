@@ -1,129 +1,129 @@
 import { makeAutoObservable } from 'mobx'
-import type { Type } from '../entities/type/types';
-import type { Brand } from '../entities/brand/types';
-import type { Device } from '../entities/device/types';
-import type { Basket } from '../entities/basket/types';
+import type { Type } from '../entities/type/types'
+import type { Brand } from '../entities/brand/types'
+import type { Device } from '../entities/device/types'
+import type { Basket } from '../entities/basket/types'
 
 export default class DeviceStore {
-	private _types: Type[] = [];
-  	private _brands: Brand[] = [];
-  	private _devices: Device[] = [];
-  	private _baskets: Basket[] = [];
-  
-  	private _selectedType: Type | null | undefined = null;
-  	private _selectedBrand: Brand | null | undefined = null;
-	private _currentDevice: boolean = false;
-	private _searchName: string = '';
-  
-  	private _page: number = 1;
-   private _totalCount: number = 0;
-  	private _limit: number = 10;
-	constructor() {
-		makeAutoObservable(this)
-	}
+  private _types: Type[] = []
+  private _brands: Brand[] = []
+  private _devices: Device[] = []
+  private _baskets: Basket[] = []
 
-	setTypes(types: Type[]) {
-		this._types = types
-	}
+  private _selectedType: Type | null | undefined = null
+  private _selectedBrand: Brand | null | undefined = null
+  private _currentDevice: boolean = false
+  private _searchName: string = ''
 
-	setBrands(brands: Brand[]) {
-		this._brands = brands
-	}
+  private _page: number = 1
+  private _totalCount: number = 0
+  private _limit: number = 10
+  constructor() {
+    makeAutoObservable(this)
+  }
 
-	setDevices(devices: Device[]) {
-		this._devices = devices
-	}
+  setTypes(types: Type[]) {
+    this._types = types
+  }
 
-	setSearchName(searchName: string) {
-		this._searchName = searchName
-	}
+  setBrands(brands: Brand[]) {
+    this._brands = brands
+  }
 
-	setBaskets(basket: Basket[]) {
-		this._baskets = basket
-	}
+  setDevices(devices: Device[]) {
+    this._devices = devices
+  }
 
-	setSelectedType(type: Type | undefined) {
-		this.setPage(1)
-		this._selectedType = type
-	}
+  setSearchName(searchName: string) {
+    this._searchName = searchName
+  }
 
-	setSelectedBrand(brand: Brand | undefined) {
-		this.setPage(1)
-		this._selectedBrand = brand
-	}
+  setBaskets(basket: Basket[]) {
+    this._baskets = basket
+  }
 
-	setCurrentDevice(device: boolean) {
-		this._currentDevice = device
-	}
+  setSelectedType(type: Type | undefined) {
+    this.setPage(1)
+    this._selectedType = type
+  }
 
-	setPage(page: number) {
-		this._page = page
-	}
+  setSelectedBrand(brand: Brand | undefined) {
+    this.setPage(1)
+    this._selectedBrand = brand
+  }
 
-	setTotalCount(count: number) {
-		this._totalCount = count
-	}
+  setCurrentDevice(device: boolean) {
+    this._currentDevice = device
+  }
 
-	setLimit(limit: number) {
-		this._limit = limit;
-	}
+  setPage(page: number) {
+    this._page = page
+  }
 
-	clearSelectedBrand() {
-		this.setPage(1);
-		this._selectedBrand = null;
-	}
+  setTotalCount(count: number) {
+    this._totalCount = count
+  }
 
-	clearSearchName() {
-		this.setPage(1)
-		this._searchName = ''
-	}
+  setLimit(limit: number) {
+    this._limit = limit
+  }
 
-	clearSelectedType() {
-		this.setPage(1);
-		this._selectedType = null;
-	}
+  clearSelectedBrand() {
+    this.setPage(1)
+    this._selectedBrand = null
+  }
 
-	get types() {
-		return this._types
-	}
+  clearSearchName() {
+    this.setPage(1)
+    this._searchName = ''
+  }
 
-	get brands() {
-		return this._brands
-	}
+  clearSelectedType() {
+    this.setPage(1)
+    this._selectedType = null
+  }
 
-	get devices() {
-		return this._devices
-	}
+  get types() {
+    return this._types
+  }
 
-	get searchName() {
-		return this._searchName
-	}
+  get brands() {
+    return this._brands
+  }
 
-	get basket() {
-		return this._baskets
-	}
+  get devices() {
+    return this._devices
+  }
 
-	get selectedType() {
-		return this._selectedType
-	}
+  get searchName() {
+    return this._searchName
+  }
 
-	get selectedBrand() {
-		return this._selectedBrand
-	}
+  get basket() {
+    return this._baskets
+  }
 
-	get currentDevice() {
-		return this._currentDevice
-	}
+  get selectedType() {
+    return this._selectedType
+  }
 
-	get page() {
-		return this._page
-	}
+  get selectedBrand() {
+    return this._selectedBrand
+  }
 
-	get totalCount() {
-		return this._totalCount
-	}
+  get currentDevice() {
+    return this._currentDevice
+  }
 
-	get limit() {
-		return this._limit
-	}
+  get page() {
+    return this._page
+  }
+
+  get totalCount() {
+    return this._totalCount
+  }
+
+  get limit() {
+    return this._limit
+  }
 }

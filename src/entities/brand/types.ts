@@ -1,8 +1,8 @@
 export interface Brand {
-	id?: number;
-	name: string
+  id?: number
+  name: string
 }
 
 export interface TypeBrand {
-	id?: number
+  id?: number
 }

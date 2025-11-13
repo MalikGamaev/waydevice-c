@@ -1,116 +1,170 @@
-@import "bootstrap-icons/font/bootstrap-icons.css";
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
-html, body {
-	height: 100%;
-	overflow-x: hidden;
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+  --card-bg: #f8f9fa;
+  --navbar-bg: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  --button-bg: blue;
+  --input-bg: #ffffff;
+  --placeholder-text: rgba(0, 0, 0, 0.25);
+  --pagination-active-bg: #0d6efd;
+  --pagination-bg: #e0e0e0;
+  --pagination-text: black;
+  --slide-border: #0d6efd;
+  --btn-close: invert(0%) brightness(100%);
+  --input-box: rgba(93, 95, 211, 0.5)
+    --slick-after: linear-gradient(270deg, #f8f8f8 1.1%, rgba(248, 248, 248, 0.0001) 100%);
+  --slick-before: linear-gradient(90deg, #f8f8f8 1.1%, rgba(248, 248, 248, 0.0001) 100%);
+}
+
+[data-theme='dark'] {
+  --bg-color: #343434;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --navbar-bg: black;
+  --button-bg: #495057;
+  --input-bg: #495057;
+  --placeholder-text: rgba(255, 255, 255, 0.5);
+  --pagination-active-bg: black;
+  --pagination-bg: #495057;
+  --pagination-text: #fff;
+  --slide-border: #fff;
+  --btn-close: invert(100%) brightness(200%);
+  --input-box: rgba(255, 255, 255, 0.5);
+  --slick-after: linear-gradient(270deg, #343434 1.1%, rgba(52, 52, 52, 0) 100%);
+  --slick-before: linear-gradient(90deg, #343434 1.1%, rgba(52, 52, 52, 0) 100%);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .app {
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.image{
-	background: url('../assets/bigStar.png');
-	width: 250px;
-	height: 240px;
-	background-size: cover;
-	font-size: 64px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
+.image {
+  background: url('../assets/bigStar.png');
+  width: 250px;
+  height: 240px;
+  background-size: cover;
+  font-size: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.deleteOrder{
-	margin-left: 25px;
-	color: #ca5252;
-	cursor: pointer;
-	float: right;
-	transition: color, transform 500ms ease;
+.deleteOrder {
+  margin-left: 25px;
+  color: #ca5252;
+  cursor: pointer;
+  float: right;
+  transition:
+    color,
+    transform 500ms ease;
 }
 
-.deleteOrder:hover{
-	color: #d83030;
-	transform: scale(1.5);
+.deleteOrder:hover {
+  color: #d83030;
+  transform: scale(1.5);
 }
 
 .footer {
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-      color: #fff;
-      padding: 5px 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .footer a {
-      color: #cbd5e1;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .footer a:hover {
-      color: #ffd700;
-      text-decoration: underline;
-    }
-    .social-icon {
-      font-size: 1.8rem;
-      margin-right: 15px;
-      transition: transform 0.3s ease, color 0.3s ease;
-      cursor: pointer;
-    }
-    .social-icon:hover {
-      color: #ffd700;
-      transform: scale(1.3);
-    }
-    .footer .subscribe input[type="email"] {
-      border-radius: 50px 0 0 50px;
-      border: none;
-      padding: 10px 20px;
-      width: 250px;
-      max-width: 100%;
-    }
-    .footer .subscribe button {
-      border-radius: 0 50px 50px 0;
-      background-color: #ffd700;
-      border: none;
-      padding: 10px 25px;
-      color: #333;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-    .footer .subscribe button:hover {
-      background-color: #e5c100;
-    }
+  background: var(--navbar-bg);
+  color: #fff;
+  padding: 5px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer a:hover {
+  color: #ffd700;
+  text-decoration: underline;
+}
+.social-icon {
+  font-size: 1.8rem;
+  margin-right: 15px;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+  cursor: pointer;
+}
+.social-icon:hover {
+  color: #ffd700;
+  transform: scale(1.3);
+}
+.footer .subscribe input[type='email'] {
+  border-radius: 50px 0 0 50px;
+  border: none;
+  padding: 10px 20px;
+  width: 250px;
+  max-width: 100%;
+}
+.footer .subscribe button {
+  border-radius: 0 50px 50px 0;
+  background-color: #ffd700;
+  border: none;
+  padding: 10px 25px;
+  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.footer .subscribe button:hover {
+  background-color: #e5c100;
+}
 .brand-logo {
-	transition: transform ease 1s;
+  transition: transform ease 1s;
 }
 
 .brand-logo:hover {
-	transform: scale(90%);
+  transform: scale(90%);
 }
 
 .play-regular {
-  font-family: "Play", sans-serif;
+  font-family: 'Play', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .play-bold {
-  font-family: "Play", sans-serif;
+  font-family: 'Play', sans-serif;
   font-weight: 700;
   font-style: normal;
-  
 }
 .input_filter {
-	border-radius: 5px;
-	border: 2px solid plum;
-	transition: box-shadow ease 500ms;
+  border-radius: 5px;
+  border: 2px solid plum;
+  transition: box-shadow ease 500ms;
 }
 .input_filter:focus {
-	border: 2px solid plum !important;
-	box-shadow: 1px 1px 9px 3px purple;
+  border: 2px solid plum !important;
+  box-shadow: 1px 1px 9px 3px purple;
 }
-
 
 .product-card {
   display: flex;
@@ -120,7 +174,9 @@ html, body {
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   background: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   width: 150px;
   height: 210px;
 }
@@ -151,8 +207,8 @@ html, body {
 }
 
 .info-section {
-  background-color: #f8f9fa;
-  height: 50px;
+  background-color: var(--card-bg);
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -161,6 +217,7 @@ html, body {
 .device-name {
   font-weight: 700;
   font-size: 16px;
+  color: var(--text-color);
 }
 
 .device-rating {
@@ -174,7 +231,7 @@ html, body {
   font-weight: 700;
   font-size: 17px;
   color: #198754; /* приятный зелёный для цены */
-  
+
   text-align: right;
 }
 
@@ -184,71 +241,201 @@ html, body {
   margin-bottom: 0;
 }
 
-.active-slide {
-  border: 2px solid #2575fc !important;
-  border-radius: 6px !important;
-  
+button.list-group-item.active {
+  background-color: var(--button-bg);
+  border: 2px solid var(--button-bg);
 }
 
-.slick-slide {
-	border: 2px solid white !important;
-	border-radius: 6px !important;
+.custom-slide {
+  border-radius: 6px !important;
+  color: var(--text-color) !important;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--pagination-bg);
+}
+
+.btn-close {
+  filter: var(--btn-close);
+}
+
+.btn-close:focus {
+  box-shadow: none;
+}
+
+input.form-control {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+input.form-control::placeholder {
+  color: var(--placeholder-text);
+}
+
+input.form-control:focus {
+  box-shadow: 0px 0px 2px 3px var(--input-box);
+  background-color: var(--input-bg);
+  border-color: white;
+  color: var(--text-color);
 }
 
 .d-page__name {
-	font-size: 32px;
-	text-align: center;
+  font-size: 32px;
+  text-align: center;
 }
 
 .d-page__card {
-	 width: 300px;
-	 height: 300px;
-	 font-size: 32px;
-	 border: 5px solid lightgray
+  width: 300px;
+  height: 300px;
+  font-size: 32px;
+  border: 5px solid lightgray;
 }
+
+.ant-input-outlined {
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+
+.ant-input::placeholder {
+  color: var(--placeholder-text); /* нужный цвет */
+}
+
+.ant-input:focus,
+.ant-input:hover {
+  background: var(--input-bg);
+  border-color: var(--slide-border);
+}
+
+li.page-item {
+  cursor: pointer;
+}
+.page-link {
+  background: var(--pagination-bg);
+  border-color: var(--pagination-bg);
+  color: var(--pagination-text);
+}
+
+.page-link:hover {
+  color: black;
+}
+.active > .page-link {
+  background-color: var(--pagination-active-bg);
+  border-color: var(--pagination-active-bg);
+}
+
+.active > .page-link:hover {
+  color: white;
+}
+
 @media (max-width: 968px) {
-	
 }
 @media (max-width: 768px) {
-	.d-page__card {
-		width: 220px;
-	}
+  .d-page__card {
+    width: 220px;
+  }
 }
 
 @media (max-width: 576px) {
-	.d-page__card {
-		width: 300px;
-	}
-	.slick-list::after, .slick-list::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	
-	width: 55px;
-	height: 29px;
-	z-index: 10;
-}
+  .d-page__card {
+    width: 300px;
+  }
+  .slick-list::after,
+  .slick-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
 
-.slick-list::after {
-	right: -15px;
-	
-	background: linear-gradient(270deg, #f8f8f8 1.1%, rgba(248, 248, 248, 0.0001) 100%);
-}
+    width: 55px;
+    height: 100%;
+    z-index: 10;
+  }
 
-.slick-list::before {
-	left: -15px;
-	background: linear-gradient(90deg, #f8f8f8 1.1%, rgba(248, 248, 248, 0.0001) 100%);
-}
-	
-}
+  .slick-list::after {
+    right: -15px;
 
+    background: var(--slick-after);
+  }
+
+  .slick-list::before {
+    left: -15px;
+    background: var(--slick-before);
+  }
+}
 
 .slick-list {
   overflow: visible !important;
+  margin-bottom: 2px !important;
+}
+
+.ant-carousel .slick-dots li button {
+  background-color: gray; /* цвет для неактивных точек */
+}
+
+/* Цвет активной точки */
+.ant-carousel .slick-dots li.slick-active::after {
+  background-color: var(--pagination-active-bg) !important;
+}
+
+.toggle-switch {
+  width: 60px;
+  height: 30px;
+  background-color: #bbb;
+  border-radius: 15px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  transition: background-color 0.3s ease;
+  outline: none;
+}
+
+.toggle-switch.light {
+  background-color: #f0e68c;
+}
+
+.toggle-switch.dark {
+  background-color: #4a4a4a;
+}
+
+.slider {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.toggle-switch.light .slider {
+  transform: translateX(0);
+}
+
+.toggle-switch.dark .slider {
+  transform: translateX(30px);
+}
+
+.icon {
+  user-select: none;
+  pointer-events: none;
+}
+
+.navbar-toggler-icon {
+  filter: var(--btn-close);
+}
+
+.basic-navbar-nav {
+  border-color: var(--pagination-text) !important;
 }
 
 /* Делает слайды с отступами, чтобы не слипались */
 
 /* При необходимости компенсируйте отступы треком */
-
-
